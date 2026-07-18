@@ -238,6 +238,11 @@ app.get('/api/migrate-images', async (req, res) => {
   try {
     const cloudinary = require('cloudinary').v2;
     const fs = require('fs');
+    console.log('Cloudinary config:', {
+      cloud_name: process.env.CLOUDINARY_CLOUD_NAME ? 'SET' : 'MISSING',
+      api_key: process.env.CLOUDINARY_API_KEY ? 'SET' : 'MISSING',
+      api_secret: process.env.CLOUDINARY_API_SECRET ? 'SET' : 'MISSING'
+    });
     const [products] = await db.query("SELECT id, name, image FROM products WHERE image LIKE '/images/%'");
     let migrated = 0, skipped = 0, errors = [];
     for (const p of products) {
@@ -250,9 +255,8 @@ app.get('/api/migrate-images', async (req, res) => {
         });
         await db.query('UPDATE products SET image = ? WHERE id = ?', [result.secure_url, p.id]);
         migrated++;
-        console.log(`Migrated: ${p.name} -> ${result.secure_url}`);
       } catch (e) {
-        errors.push(`${p.name}: ${e.message}`);
+        errors.push({ name: p.name, error: e.message || String(e) });
       }
     }
     res.json({ success: true, migrated, skipped, errors });

@@ -30,6 +30,7 @@
       <input type="text" id="search-filter" placeholder="Search fragrances..." style="padding:10px;border-radius:8px;border:2px solid #e2e8f0;flex:1;min-width:200px;">
     </div>
     <div class="product-grid" id="products"><div class="loading-placeholder"><div class="spinner"></div><p>Loading fragrances...</p></div></div>
+    <div id="pagination" style="display:flex;justify-content:center;align-items:center;gap:10px;margin:30px 0;"></div>
   </div>
 </div>
 <footer><div class="container">
@@ -51,17 +52,30 @@
 <div class="toast" id="toast"></div>
 <script src="/js/app.js"></script>
 <script>
-async function loadProducts() {
+let currentPage = 1;
+async function loadProducts(page) {
+  if (page) currentPage = page;
   const cat = document.getElementById('category-filter').value;
   const sort = document.getElementById('sort-filter').value;
   const search = document.getElementById('search-filter').value;
-  let url = '/api/products?';
+  let url = `/api/products?page=${currentPage}&`;
   if (cat) url += `category=${cat}&`;
   if (sort) url += `sort=${sort}&`;
   if (search) url += `search=${encodeURIComponent(search)}&`;
-  const res = await fetch(url);
-  const products = await res.json();
+  const data = await (await fetch(url)).json();
+  const { products, totalPages, page: p, total } = data;
   document.getElementById('products').innerHTML = products.length ? products.map(productCard).join('') : '<div class="empty-state"><h3>No products found</h3></div>';
+
+  const pag = document.getElementById('pagination');
+  if (totalPages <= 1) { pag.innerHTML = ''; return; }
+  let btns = '';
+  btns += `<button onclick="loadProducts(${p - 1})" ${p <= 1 ? 'disabled' : ''} style="padding:10px 16px;border:2px solid #e2e8f0;border-radius:8px;background:#fff;cursor:pointer;${p <= 1 ? 'opacity:0.4;cursor:default;' : ''}">Prev</button>`;
+  for (let i = 1; i <= totalPages; i++) {
+    btns += `<button onclick="loadProducts(${i})" style="padding:10px 14px;border:2px solid ${i === p ? 'var(--primary)' : '#e2e8f0'};border-radius:8px;background:${i === p ? 'var(--primary)' : '#fff'};color:${i === p ? '#fff' : '#333'};cursor:pointer;font-weight:${i === p ? '700' : '400'};">${i}</button>`;
+  }
+  btns += `<button onclick="loadProducts(${p + 1})" ${p >= totalPages ? 'disabled' : ''} style="padding:10px 16px;border:2px solid #e2e8f0;border-radius:8px;background:#fff;cursor:pointer;${p >= totalPages ? 'opacity:0.4;cursor:default;' : ''}">Next</button>`;
+  pag.innerHTML = btns;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 (async function() {
   const cats = await (await fetch('/api/products/categories')).json();
@@ -70,9 +84,9 @@ async function loadProducts() {
   loadCartCount();
   try { const u = await fetchJSON('/api/auth/me'); setAuthLinks(u); } catch(e) { setAuthLinks(null); }
 })();
-document.getElementById('category-filter').onchange = loadProducts;
-document.getElementById('sort-filter').onchange = loadProducts;
-document.getElementById('search-filter').oninput = debounce(loadProducts, 300);
+document.getElementById('category-filter').onchange = () => loadProducts(1);
+document.getElementById('sort-filter').onchange = () => loadProducts(1);
+document.getElementById('search-filter').oninput = debounce(() => loadProducts(1), 300);
 function debounce(fn, ms) { let t; return function() { clearTimeout(t); t = setTimeout(fn, ms); }; }
 </script>
 </body></html>

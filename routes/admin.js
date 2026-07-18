@@ -3,25 +3,27 @@ const router = express.Router();
 const db = require('../config/db');
 const multer = require('multer');
 const path = require('path');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, '..', 'public', 'uploads')),
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'handel-luxe/products',
+    allowed_formats: ['jpeg', 'jpg', 'png', 'gif', 'webp'],
+    transformation: [{ width: 800, height: 800, crop: 'limit' }]
   }
 });
 
 const upload = multer({
   storage,
-  limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
-    const allowed = /jpeg|jpg|png|gif|webp/;
-    const extname = allowed.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = allowed.test(file.mimetype);
-    if (extname && mimetype) return cb(null, true);
-    cb(new Error('Only image files (jpeg, jpg, png, gif, webp) are allowed'));
-  }
+  limits: { fileSize: 5 * 1024 * 1024 }
 });
 
 const adminAuth = (req, res, next) => {
@@ -85,7 +87,7 @@ router.put('/orders/:id/payment', adminAuth, async (req, res) => {
 router.post('/products', adminAuth, upload.single('image'), async (req, res) => {
   try {
     const { name, description, price, category_id, stock, featured } = req.body;
-    const image = req.file ? '/uploads/' + req.file.filename : (req.body.image_url || '/images/placeholder.png');
+    const image = req.file ? req.file.path : (req.body.image_url || '/images/placeholder.png');
     const [result] = await db.query(
       'INSERT INTO products (name, description, price, category_id, stock, image, featured) VALUES (?, ?, ?, ?, ?, ?, ?)',
       [name, description, price, category_id || null, stock || 0, image, featured ? 1 : 0]
@@ -99,7 +101,7 @@ router.post('/products', adminAuth, upload.single('image'), async (req, res) => 
 router.put('/products/:id', adminAuth, upload.single('image'), async (req, res) => {
   try {
     const { name, description, price, category_id, stock, image_url, featured } = req.body;
-    const image = req.file ? '/uploads/' + req.file.filename : (image_url || req.body.image);
+    const image = req.file ? req.file.path : (image_url || req.body.image);
     await db.query(
       'UPDATE products SET name=?, description=?, price=?, category_id=?, stock=?, image=?, featured=? WHERE id=?',
       [name, description, price, category_id || null, stock, image, featured ? 1 : 0, req.params.id]

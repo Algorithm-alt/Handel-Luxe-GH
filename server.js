@@ -234,6 +234,33 @@ app.get('/api/setup', async (req, res) => {
   }
 });
 
+app.get('/api/migrate-images', async (req, res) => {
+  try {
+    const cloudinary = require('cloudinary').v2;
+    const fs = require('fs');
+    const [products] = await db.query("SELECT id, name, image FROM products WHERE image LIKE '/images/%'");
+    let migrated = 0, skipped = 0, errors = [];
+    for (const p of products) {
+      try {
+        const filePath = path.join(__dirname, 'public', p.image);
+        if (!fs.existsSync(filePath)) { skipped++; continue; }
+        const result = await cloudinary.uploader.upload(filePath, {
+          folder: 'handel-luxe/products',
+          transformation: [{ width: 800, height: 800, crop: 'limit' }]
+        });
+        await db.query('UPDATE products SET image = ? WHERE id = ?', [result.secure_url, p.id]);
+        migrated++;
+        console.log(`Migrated: ${p.name} -> ${result.secure_url}`);
+      } catch (e) {
+        errors.push(`${p.name}: ${e.message}`);
+      }
+    }
+    res.json({ success: true, migrated, skipped, errors });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
   autoSetup();

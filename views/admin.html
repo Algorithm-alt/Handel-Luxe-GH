@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin Panel - Handel Luxe GH</title><link rel="icon" type="image/png" href="/images/logo.png"><link rel="stylesheet" href="/css/style.css"></head>
+<body>
+<nav><div class="container nav-inner">
+  <a href="/" class="logo"><img src="/images/logo.png" alt="Handel Luxe GH" style="height:40px;"> Handel Luxe GH</a>
+  <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links"><a href="/">Home</a><span id="auth-links"></span></div>
+</div></nav>
+<div class="admin-layout">
+  <div class="admin-sidebar">
+    <a href="#" class="active" onclick="showTab('dashboard')">Dashboard</a>
+    <a href="#" onclick="showTab('products')">Products</a>
+    <a href="#" onclick="showTab('categories')">Categories</a>
+    <a href="#" onclick="showTab('orders')">Orders</a>
+    <a href="#" onclick="showTab('users')">Users</a>
+    <a href="#" onclick="showTab('messages')">Messages</a>
+    <a href="#" onclick="showTab('add-product')">Add Product</a>
+    <a href="#" onclick="showTab('profile')">My Profile</a>
+    <a href="/" style="margin-top:30px;border-top:1px solid #334155;padding-top:15px;">Back to Store</a>
+  </div>
+  <div class="admin-content" id="admin-content"><div class="loading-placeholder"><div class="spinner"></div><p>Loading admin panel...</p></div></div>
+</div>
+<footer><div class="container">
+  <div class="footer-grid">
+    <div class="footer-col"><h3>Handel Luxe GH</h3><p>Your premier destination for authentic perfumes and fragrances in Ghana.</p>
+      <div class="social-icons">
+        <a href="https://www.instagram.com/handelluxegh" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+        <a href="https://www.tiktok.com/@handelluxegh" target="_blank" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+        <a href="https://chat.whatsapp.com/CCJ8yu5AoMLBXTtqz5dl12" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-col"><h3>Quick Links</h3><a href="/products">All Fragrances</a><a href="/orders">My Orders</a><a href="/about">About Us</a><a href="/privacy">Privacy Policy</a></div>
+    <div class="footer-col"><h3>Contact</h3><p>Email: drdehandel@gmail.com</p><p>Phone: 0542332244 | 0549986486</p></div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 Handel Luxe GH. All rights reserved &nbsp;&nbsp; | &nbsp;&nbsp;Website by <a href="https://wa.link/h9xelb" target="_blank" style="color:var(--primary);">Algorithm Web Services</a>  &nbsp;Contact : 0542807324</div>
+</div></footer>
+<button class="scroll-top" aria-label="Scroll to top">&#9650;</button>
+<a href="https://wa.link/pnrow8" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+<div class="toast" id="toast"></div>
+<script src="/js/app.js"></script>
+<script>
+let currentTab = 'dashboard';
+async function checkAdmin() {
+  try { const u = await fetchJSON('/api/auth/me'); if (u.role !== 'admin') throw new Error('Not admin'); setAuthLinks(u, { hideAdmin: true, prefix: 'Admin: ' }); }
+  catch(e) { window.location.href = '/login'; }
+}
+function showTab(tab) {
+  currentTab = tab;
+  const links = document.querySelectorAll('.admin-sidebar a');
+  const tabs = ['dashboard', 'products', 'categories', 'orders', 'users', 'messages', 'add-product', 'profile'];
+  const idx = tabs.indexOf(tab);
+  links.forEach(a => a.classList.remove('active'));
+  if (idx >= 0 && links[idx]) links[idx].classList.add('active');
+  showLoading('#admin-content');
+  if (tab === 'dashboard') loadDashboard();
+  else if (tab === 'products') loadAdminProducts();
+  else if (tab === 'categories') loadCategories();
+  else if (tab === 'orders') loadAdminOrders();
+  else if (tab === 'users') loadUsers();
+  else if (tab === 'messages') loadMessages();
+  else if (tab === 'add-product') showAddProduct();
+  else if (tab === 'profile') loadProfile();
+}
+async function loadDashboard() {
+  const s = await fetchJSON('/api/admin/stats');
+  document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">Dashboard</h2>
+    <div class="stat-cards">
+      <div class="stat-card"><div class="label">Total Users</div><div class="value">${s.users}</div></div>
+      <div class="stat-card"><div class="label">Total Fragrances</div><div class="value">${s.products}</div></div>
+      <div class="stat-card"><div class="label">Total Stock</div><div class="value">${s.total_stock}</div></div>
+      <div class="stat-card"><div class="label">Total Orders</div><div class="value">${s.orders}</div></div>
+      <div class="stat-card"><div class="label">Total Revenue</div><div class="value">${formatPrice(s.revenue)}</div></div>
+      ${s.pending_payments > 0 ? `<div class="stat-card" style="border-left:4px solid #f59e0b;"><div class="label">Awaiting Payment</div><div class="value" style="color:#f59e0b;">${s.pending_payments}</div></div>` : ''}
+    </div>`;
+}
+async function loadAdminProducts() {
+  const products = await fetchJSON('/api/admin/all-products');
+  window._adminProducts = products;
+  renderAdminProducts(products);
+}
+function renderAdminProducts(products) {
+  document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">Manage Fragrances</h2>
+    <div style="margin-bottom:20px;"><input type="text" id="admin-product-search" placeholder="Search fragrances..." style="width:100%;max-width:400px;padding:10px 15px;border:2px solid #e2e8f0;border-radius:8px;font-size:1rem;" oninput="filterAdminProducts()"></div>
+    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Featured</th><th>Actions</th></tr></thead>
+    <tbody id="admin-products-tbody">${products.map(p => `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.category_name || '-'}</td><td>${formatPrice(p.price)}</td>
+    <td style="white-space:nowrap;"><input type="number" id="stock-${p.id}" value="${p.stock}" min="0" style="width:70px;padding:5px;border:2px solid #e2e8f0;border-radius:5px;text-align:center;"> <button class="btn btn-primary btn-sm" onclick="updateStock(${p.id})">Save</button></td>
+    <td>${p.featured ? 'Yes' : 'No'}</td>
+    <td style="white-space:nowrap;"><button class="btn btn-primary btn-sm" onclick="showEditProduct(${p.id})">Edit</button> <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">Delete</button></td></tr>`).join('')}</tbody></table></div>`;
+}
+function filterAdminProducts() {
+  const q = document.getElementById('admin-product-search').value.toLowerCase();
+  const filtered = window._adminProducts.filter(p => p.name.toLowerCase().includes(q) || (p.category_name || '').toLowerCase().includes(q));
+  const tbody = document.getElementById('admin-products-tbody');
+  tbody.innerHTML = filtered.map(p => `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.category_name || '-'}</td><td>${formatPrice(p.price)}</td>
+    <td style="white-space:nowrap;"><input type="number" id="stock-${p.id}" value="${p.stock}" min="0" style="width:70px;padding:5px;border:2px solid #e2e8f0;border-radius:5px;text-align:center;"> <button class="btn btn-primary btn-sm" onclick="updateStock(${p.id})">Save</button></td>
+    <td>${p.featured ? 'Yes' : 'No'}</td>
+    <td style="white-space:nowrap;"><button class="btn btn-primary btn-sm" onclick="showEditProduct(${p.id})">Edit</button> <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">Delete</button></td></tr>`).join('');
+}
+async function updateStock(id) {
+  const stock = document.getElementById('stock-' + id).value;
+  try {
+    await fetchJSON(`/api/admin/products/${id}/stock`, { method: 'PUT', body: JSON.stringify({ stock: parseInt(stock) }) });
+    toast('Stock updated!', 'success');
+    const item = window._adminProducts.find(p => p.id === id);
+    if (item) item.stock = parseInt(stock);
+  } catch (e) { toast(e.message, 'error'); }
+}
+async function showEditProduct(id) {
+  const [products, cats] = await Promise.all([fetchJSON('/api/admin/all-products'), fetchJSON('/api/products/categories')]);
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">Edit Fragrance</h2>
+    <div style="max-width:600px;"><form id="edit-product-form" enctype="multipart/form-data">
+      <div class="form-group"><label>Fragrance Name</label><input type="text" id="ep-name" value="${p.name}" required></div>
+      <div class="form-group"><label>Description</label><textarea id="ep-desc" rows="3">${p.description || ''}</textarea></div>
+      <div class="form-group"><label>Price (GH&#8373;)</label><input type="number" id="ep-price" step="0.01" value="${p.price}" required></div>
+      <div class="form-group"><label>Category</label><select id="ep-cat"><option value="">Select category</option>${cats.map(c => `<option value="${c.id}" ${p.category_id == c.id ? 'selected' : ''}>${c.name}</option>`).join('')}</select></div>
+      <div class="form-group"><label>Stock</label><input type="number" id="ep-stock" value="${p.stock}"></div>
+      <div class="form-group"><label>Current Image</label><div style="margin-bottom:10px;"><img src="${p.image}" style="max-width:150px;border-radius:8px;"></div>
+        <div style="display:flex;gap:15px;align-items:center;flex-wrap:wrap;">
+          <div><span onclick="document.getElementById('ep-image-file').click()" style="display:inline-block;padding:10px 20px;background:var(--primary);color:white;border-radius:8px;cursor:pointer;font-weight:600;">Upload New</span>
+            <input type="file" id="ep-image-file" accept="image/*" style="display:none;" onchange="previewEditImage(this)">
+            <p id="ep-file-name" style="font-size:0.85rem;color:var(--gray);margin-top:5px;"></p></div>
+          <div style="color:var(--gray);">OR</div>
+          <div style="flex:1;min-width:200px;"><input type="text" id="ep-image-url" placeholder="Paste image URL" style="width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;"></div>
+        </div>
+        <div id="ep-image-preview" style="margin-top:10px;display:none;"><img id="ep-preview-img" style="max-width:200px;border-radius:8px;"></div>
+      </div>
+      <div class="form-group"><label><input type="checkbox" id="ep-featured" ${p.featured ? 'checked' : ''}> Featured Fragrance</label></div>
+      <div id="msg"></div>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <button type="button" class="btn btn-outline" onclick="loadAdminProducts()" style="margin-left:10px;">Cancel</button>
+    </form></div>`;
+  document.getElementById('edit-product-form').onsubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('name', document.getElementById('ep-name').value);
+    formData.append('description', document.getElementById('ep-desc').value);
+    formData.append('price', document.getElementById('ep-price').value);
+    formData.append('category_id', document.getElementById('ep-cat').value || '');
+    formData.append('stock', document.getElementById('ep-stock').value);
+    formData.append('featured', document.getElementById('ep-featured').checked);
+    const fileInput = document.getElementById('ep-image-file');
+    const urlInput = document.getElementById('ep-image-url').value;
+    if (fileInput.files.length > 0) formData.append('image', fileInput.files[0]);
+    else if (urlInput) formData.append('image_url', urlInput);
+    try {
+      await fetch(`/api/admin/products/${id}`, { method: 'PUT', body: formData });
+      toast('Fragrance updated!', 'success');
+      loadAdminProducts();
+    } catch (e) { document.getElementById('msg').innerHTML = `<p class="error-msg">${e.message}</p>`; }
+  };
+}
+function previewEditImage(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      document.getElementById('ep-preview-img').src = e.target.result;
+      document.getElementById('ep-image-preview').style.display = 'block';
+      document.getElementById('ep-file-name').textContent = input.files[0].name;
+      document.getElementById('ep-image-url').value = '';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+async function loadCategories() {
+  const cats = await fetchJSON('/api/admin/categories');
+  document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">Manage Categories</h2>
+    <div style="max-width:500px;margin-bottom:30px;background:var(--white);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);">
+      <h3 style="margin-bottom:15px;">Add Category</h3>
+      <form id="add-cat-form" style="display:flex;gap:10px;flex-wrap:wrap;">
+        <input type="text" id="cat-name" placeholder="Category name" required style="flex:1;min-width:200px;padding:10px;border:2px solid #e2e8f0;border-radius:8px;">
+        <input type="text" id="cat-desc" placeholder="Description (optional)" style="flex:1;min-width:200px;padding:10px;border:2px solid #e2e8f0;border-radius:8px;">
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+    </div>
+    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th>Name</th><th>Description</th><th>Products</th><th>Actions</th></tr></thead>
+    <tbody>${cats.length === 0 ? '<tr><td colspan="5" style="text-align:center;color:var(--gray);">No categories yet</td></tr>' :
+    cats.map(c => `<tr><td>${c.id}</td><td>${c.name}</td><td>${c.description || '-'}</td><td>${c.product_count}</td>
+    <td style="white-space:nowrap;"><button class="btn btn-primary btn-sm" onclick="showEditCategory(${c.id},'${c.name.replace(/'/g,"\\'")}','${(c.description||'').replace(/'/g,"\\'")}')">Edit</button> <button class="btn btn-danger btn-sm" onclick="deleteCategory(${c.id})">Delete</button></td></tr>`).join('')}</tbody></table></div>`;
+  document.getElementById('add-cat-form').onsubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await fetchJSON('/api/admin/categories', { method: 'POST', body: JSON.stringify({ name: document.getElementById('cat-name').value, description: document.getElementById('cat-desc').value }) });
+      toast('Category added!', 'success');
+      loadCategories();
+    } catch (e) { toast(e.message, 'error'); }
+  };
+}
+function showEditCategory(id, name, desc) {
+  document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">Edit Category</h2>
+    <div style="max-width:500px;"><form id="edit-cat-form">
+      <div class="form-group"><label>Category Name</label><input type="text" id="ec-name" value="${name}" required></div>
+      <div class="form-group"><label>Description</label><input type="text" id="ec-desc" value="${desc}"></div>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <button type="button" class="btn btn-outline" onclick="loadCategories()" style="margin-left:10px;">Cancel</button>
+    </form></div>`;
+  document.getElementById('edit-cat-form').onsubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await fetchJSON(`/api/admin/categories/${id}`, { method: 'PUT', body: JSON.stringify({ name: document.getElementById('ec-name').value, description: document.getElementById('ec-desc').value }) });
+      toast('Category updated!', 'success');
+      loadCategories();
+    } catch (e) { toast(e.message, 'error'); }
+  };
+}
+async function deleteCategory(id) {
+  if (!confirm('Delete this category? Products in it will become uncategorized.')) return;
+  await fetchJSON(`/api/admin/categories/${id}`, { method: 'DELETE' });
+  toast('Category deleted', 'success');
+  loadCategories();
+}
+async function loadAdminOrders() {
+  const orders = await fetchJSON('/api/admin/orders');
+  window._adminOrders = orders;
+  renderAdminOrders(orders);
+}
+function renderAdminOrders(orders) {
+  const paidCount = orders.filter(o => o.payment_status === 'success').length;
+  const pendingPayCount = orders.filter(o => o.payment_method === 'paystack' && o.payment_status === 'pending').length;
+  const failedCount = orders.filter(o => o.payment_status === 'failed').length;
+  document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">Manage Orders</h2>
+    <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+      <button class="btn btn-sm" onclick="filterOrders('all')" style="padding:8px 16px;border:2px solid #e2e8f0;border-radius:8px;background:var(--white);cursor:pointer;font-weight:600;">All (${orders.length})</button>
+      <button class="btn btn-sm" onclick="filterOrders('paid')" style="padding:8px 16px;border:2px solid #16a34a;border-radius:8px;background:#dcfce7;cursor:pointer;font-weight:600;">Paid (${paidCount})</button>
+      <button class="btn btn-sm" onclick="filterOrders('pending_pay')" style="padding:8px 16px;border:2px solid #f59e0b;border-radius:8px;background:#fef3c7;cursor:pointer;font-weight:600;">Awaiting Payment (${pendingPayCount})</button>
+      <button class="btn btn-sm" onclick="filterOrders('failed')" style="padding:8px 16px;border:2px solid #dc2626;border-radius:8px;background:#fee2e2;cursor:pointer;font-weight:600;">Failed (${failedCount})</button>
+    </div>
+    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th>Customer</th><th>Total</th><th>Method</th><th>Payment</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+    <tbody id="admin-orders-tbody">${renderOrderRows(orders)}</tbody></table></div>`;
+}
+function renderOrderRows(orders) {
+  return orders.map(o => `<tr><td>#${o.id}</td><td>${o.customer_name}<br><small>${o.customer_email}</small></td><td>${formatPrice(o.total)}</td>
+    <td><span style="background:#f1f5f9;padding:3px 8px;border-radius:12px;font-size:0.8rem;">${o.payment_method === 'delivery' ? 'Delivery' : 'Paystack'}</span></td>
+    <td><span class="status status-${o.payment_status === 'success' ? 'delivered' : o.payment_status === 'failed' ? 'cancelled' : 'pending'}">${o.payment_status === 'success' ? 'Paid' : o.payment_status === 'failed' ? 'Failed' : 'Pending'}</span></td>
+    <td><span class="status status-${o.status}">${o.status}</span></td><td>${new Date(o.created_at).toLocaleDateString()}</td>
+    <td style="white-space:nowrap;">
+      <button class="btn btn-primary btn-sm" onclick="viewOrderDetail(${o.id})">View</button>
+      <select onchange="updateOrderStatus(${o.id}, this.value)" style="padding:5px;border-radius:5px;margin-top:4px;">
+        ${['pending','processing','shipped','delivered','cancelled'].map(s => `<option value="${s}" ${o.status===s?'selected':''}>${s}</option>`).join('')}
+      </select>
+      ${o.payment_method === 'delivery' && o.payment_status !== 'success' ? `<button class="btn btn-primary btn-sm" onclick="markPaid(${o.id})" style="margin-top:4px;">Mark Paid</button>` : ''}
+      ${o.payment_method === 'paystack' && o.payment_status === 'pending' ? `<span style="display:block;margin-top:4px;font-size:0.75rem;color:#f59e0b;">Awaiting Paystack payment</span>` : ''}
+    </td></tr>`).join('');
+}
+function filterOrders(filter) {
+  let filtered;
+  if (filter === 'paid') filtered = window._adminOrders.filter(o => o.payment_status === 'success');
+  else if (filter === 'pending_pay') filtered = window._adminOrders.filter(o => o.payment_method === 'paystack' && o.payment_status === 'pending');
+  else if (filter === 'failed') filtered = window._adminOrders.filter(o => o.payment_status === 'failed');
+  else filtered = window._adminOrders;
+  document.getElementById('admin-orders-tbody').innerHTML = renderOrderRows(filtered);
+}
+async function viewOrderDetail(id) {
+  const o = await fetchJSON(`/api/admin/orders/${id}`);
+  document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">Order #${o.id}</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:700px;">
+      <div style="background:var(--white);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);">
+        <h3 style="margin-bottom:10px;">Customer Info</h3>
+        <p><strong>${o.customer_name}</strong></p>
+        <p style="color:var(--gray);">${o.customer_email}</p>
+        <p style="color:var(--gray);">Phone: ${o.phone || 'N/A'}</p>
+      </div>
+      <div style="background:var(--white);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);">
+        <h3 style="margin-bottom:10px;">Order Info</h3>
+        <p>Date: ${new Date(o.created_at).toLocaleString()}</p>
+        <p>Status: <span class="status status-${o.status}">${o.status}</span></p>
+        <p>Payment: <span class="status status-${o.payment_status === 'success' ? 'delivered' : 'pending'}">${o.payment_status}</span> (${o.payment_method})</p>
+      </div>
+    </div>
+    <div style="background:var(--white);padding:20px;border-radius:var(--radius);box-shadow:var(--shadow);margin-top:20px;max-width:700px;">
+      <h3 style="margin-bottom:15px;">Items</h3>
+      ${o.items.map(i => `<div class="order-item"><img src="${i.image}" alt="${i.name}"><div class="order-item-info"><div class="name">${i.name}</div><div class="detail">Qty: ${i.quantity} &times; ${formatPrice(i.price)}</div></div><div style="font-weight:700;">${formatPrice(i.price * i.quantity)}</div></div>`).join('')}
+      <hr style="margin:15px 0;border-color:var(--light);">
+      <div style="text-align:right;font-size:1.3rem;font-weight:800;">Total: ${formatPrice(o.total)}</div>
+    </div>
+    <div style="margin-top:20px;">
+      <h3 style="margin-bottom:10px;">Shipping Address</h3>
+      <p style="color:var(--gray);background:var(--white);padding:15px;border-radius:var(--radius);max-width:700px;">${o.shipping_address}</p>
+    </div>
+    <button class="btn btn-outline" onclick="loadAdminOrders()" style="margin-top:20px;">Back to Orders</button>`;
+}
+async function markPaid(id) {
+  await fetchJSON(`/api/admin/orders/${id}/payment`, { method: 'PUT', body: JSON.stringify({ payment_status: 'success' }) });
+  toast('Payment marked as received', 'success');
+  loadAdminOrders();
+}
+async function loadUsers() {
+  const users = await fetchJSON('/api/admin/users');
+  document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">Manage Users</h2>
+    <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th>Actions</th></tr></thead>
+    <tbody>${users.map(u => `<tr><td>${u.id}</td><td>${u.name}</td><td>${u.email}</td><td><span class="status status-${u.role==='admin'?'processing':'pending'}">${u.role}</span></td><td>${new Date(u.created_at).toLocaleDateString()}</td>
+    <td style="white-space:nowrap;">
+      <select onchange="updateUserRole(${u.id}, this.value)" style="padding:5px;border-radius:5px;">
+        <option value="customer" ${u.role==='customer'?'selected':''}>Customer</option>
+        <option value="admin" ${u.role==='admin'?'selected':''}>Admin</option>
+      </select>
+      <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})" style="margin-left:4px;">Delete</button>
+    </td></tr>`).join('')}</tbody></table></div>`;
+}
+async function updateUserRole(id, role) {
+  await fetchJSON(`/api/admin/users/${id}/role`, { method: 'PUT', body: JSON.stringify({ role }) });
+  toast('Role updated', 'success');
+}
+async function deleteUser(id) {
+  if (!confirm('Delete this user? This cannot be undone.')) return;
+  await fetchJSON(`/api/admin/users/${id}`, { method: 'DELETE' });
+  toast('User deleted', 'success');
+  loadUsers();
+}
+async function loadMessages() {
+  const messages = await fetchJSON('/api/admin/messages');
+  const unread = messages.filter(m => !m.is_read).length;
+  document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">Messages ${unread > 0 ? '<span style="background:var(--danger);color:white;padding:3px 10px;border-radius:20px;font-size:0.8rem;margin-left:10px;">'+unread+' new</span>' : ''}</h2>
+    ${messages.length === 0 ? '<div class="empty-state"><h3>No messages yet</h3></div>' :
+    messages.map(m => `<div style="background:var(--white);border-radius:var(--radius);padding:20px;margin-bottom:15px;box-shadow:var(--shadow);border-left:4px solid ${m.is_read ? 'var(--gray)' : 'var(--primary)'};">
+      <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
+        <div><strong style="font-size:1.05rem;">${m.subject}</strong><br><small style="color:var(--gray);">From: ${m.name} (${m.email}) &mdash; ${new Date(m.created_at).toLocaleString()}</small></div>
+        <div style="display:flex;gap:8px;">
+          ${!m.is_read ? `<button class="btn btn-primary btn-sm" onclick="markRead(${m.id})">Mark Read</button>` : ''}
+          <button class="btn btn-danger btn-sm" onclick="deleteMessage(${m.id})">Delete</button>
+        </div>
+      </div>
+      <p style="color:var(--dark);line-height:1.7;background:var(--light);padding:15px;border-radius:8px;margin:0;">${m.message}</p>
+    </div>`).join('')}`;
+}
+async function markRead(id) {
+  await fetchJSON(`/api/admin/messages/${id}/read`, { method: 'PUT' });
+  loadMessages();
+}
+async function deleteMessage(id) {
+  if (!confirm('Delete this message?')) return;
+  await fetchJSON(`/api/admin/messages/${id}`, { method: 'DELETE' });
+  toast('Message deleted', 'success');
+  loadMessages();
+}
+function showAddProduct() {
+  document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">Add New Fragrance</h2>
+    <div style="max-width:600px;"><form id="add-product-form" enctype="multipart/form-data">
+      <div class="form-group"><label>Fragrance Name</label><input type="text" id="p-name" required></div>
+      <div class="form-group"><label>Description</label><textarea id="p-desc" rows="3"></textarea></div>
+      <div class="form-group"><label>Price (GH&#8373;)</label><input type="number" id="p-price" step="0.01" required></div>
+      <div class="form-group"><label>Category</label><select id="p-cat"><option value="">Select category</option></select></div>
+      <div class="form-group"><label>Stock</label><input type="number" id="p-stock" value="0"></div>
+      <div class="form-group"><label>Product Image</label>
+        <div style="display:flex;gap:15px;align-items:center;flex-wrap:wrap;">
+          <div><span onclick="document.getElementById('p-image-file').click()" style="display:inline-block;padding:10px 20px;background:var(--primary);color:white;border-radius:8px;cursor:pointer;font-weight:600;">Upload File</span>
+            <input type="file" id="p-image-file" accept="image/*" style="display:none;" onchange="previewImage(this)">
+            <p id="file-name" style="font-size:0.85rem;color:var(--gray);margin-top:5px;"></p></div>
+          <div style="color:var(--gray);">OR</div>
+          <div style="flex:1;min-width:200px;"><input type="text" id="p-image-url" placeholder="Paste image URL" style="width:100%;padding:10px;border:2px solid #e2e8f0;border-radius:8px;"></div>
+        </div>
+        <div id="image-preview" style="margin-top:10px;display:none;"><img id="preview-img" style="max-width:200px;border-radius:8px;"></div>
+      </div>
+      <div class="form-group"><label><input type="checkbox" id="p-featured"> Featured Fragrance</label></div>
+      <div id="msg"></div>
+      <button type="submit" class="btn btn-primary">Add Fragrance</button>
+    </form></div>`;
+  fetch('/api/products/categories').then(r=>r.json()).then(cats => {
+    document.getElementById('p-cat').innerHTML += cats.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+  });
+  document.getElementById('add-product-form').onsubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('name', document.getElementById('p-name').value);
+    formData.append('description', document.getElementById('p-desc').value);
+    formData.append('price', document.getElementById('p-price').value);
+    formData.append('category_id', document.getElementById('p-cat').value || '');
+    formData.append('stock', document.getElementById('p-stock').value);
+    formData.append('featured', document.getElementById('p-featured').checked);
+    const fileInput = document.getElementById('p-image-file');
+    const urlInput = document.getElementById('p-image-url').value;
+    if (fileInput.files.length > 0) formData.append('image', fileInput.files[0]);
+    else if (urlInput) formData.append('image_url', urlInput);
+    try {
+      await fetch('/api/admin/products', { method: 'POST', body: formData });
+      toast('Fragrance added!', 'success');
+      showTab('products');
+    } catch (e) { document.getElementById('msg').innerHTML = `<p class="error-msg">${e.message}</p>`; }
+  };
+}
+function previewImage(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      document.getElementById('preview-img').src = e.target.result;
+      document.getElementById('image-preview').style.display = 'block';
+      document.getElementById('file-name').textContent = input.files[0].name;
+      document.getElementById('p-image-url').value = '';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+async function deleteProduct(id) {
+  if (!confirm('Delete this fragrance?')) return;
+  await fetchJSON(`/api/admin/products/${id}`, { method: 'DELETE' });
+  toast('Fragrance deleted', 'success');
+  loadAdminProducts();
+}
+async function updateOrderStatus(id, status) {
+  await fetchJSON(`/api/admin/orders/${id}/status`, { method: 'PUT', body: JSON.stringify({ status }) });
+  toast('Status updated', 'success');
+}
+async function loadProfile() {
+  try {
+    const p = await fetchJSON('/api/admin/profile');
+    document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">My Profile</h2>
+      <div style="max-width:500px;"><form id="profile-form">
+        <div class="form-group"><label>Full Name</label><input type="text" id="prof-name" value="${p.name}" required></div>
+        <div class="form-group"><label>Email</label><input type="email" id="prof-email" value="${p.email}" required></div>
+        <hr style="margin:20px 0;border-color:#ddd;">
+        <p style="color:var(--gray);font-size:0.9rem;margin-bottom:15px;">Leave password fields blank to keep current password.</p>
+        <div class="form-group"><label>Current Password</label><input type="password" id="prof-current-pw" placeholder="Enter current password to change"></div>
+        <div class="form-group"><label>New Password</label><input type="password" id="prof-new-pw" placeholder="Enter new password (min 6 characters)"></div>
+        <div id="msg"></div>
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+      </form></div>`;
+    addPasswordToggle(document.getElementById('prof-current-pw'));
+    addPasswordToggle(document.getElementById('prof-new-pw'));
+    document.getElementById('profile-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('prof-name').value;
+      const email = document.getElementById('prof-email').value;
+      const current_password = document.getElementById('prof-current-pw').value;
+      const new_password = document.getElementById('prof-new-pw').value;
+      if (new_password && new_password.length < 6) { document.getElementById('msg').innerHTML = '<p class="error-msg">New password must be at least 6 characters</p>'; return; }
+      try {
+        await fetchJSON('/api/admin/profile', { method: 'PUT', body: JSON.stringify({ name, email, current_password, new_password }) });
+        toast('Profile updated!', 'success');
+      } catch (e) {
+        document.getElementById('msg').innerHTML = `<p class="error-msg">${e.message}</p>`;
+      }
+    };
+  } catch (e) {
+    document.getElementById('admin-content').innerHTML = `<h2 style="margin-bottom:25px;">My Profile</h2><p class="error-msg">${e.message}</p>`;
+  }
+}
+checkAdmin();
+loadDashboard();
+</script>
+</body></html>

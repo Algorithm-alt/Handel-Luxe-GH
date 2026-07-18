@@ -8,12 +8,14 @@ const db = require('./config/db');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-async function autoSetup() {
+async function autoSetup(force = false) {
   try {
-    const [tables] = await db.query("SHOW TABLES LIKE 'products'");
-    if (tables.length > 0) {
-      const [count] = await db.query('SELECT COUNT(*) as cnt FROM products');
-      if (count[0].cnt > 0) return;
+    if (!force) {
+      const [tables] = await db.query("SHOW TABLES LIKE 'products'");
+      if (tables.length > 0) {
+        const [count] = await db.query('SELECT COUNT(*) as cnt FROM products');
+        if (count[0].cnt > 0) return;
+      }
     }
 
     console.log('Dropping old tables...');
@@ -221,7 +223,7 @@ app.get('/payment/verify', (req, res) => res.sendFile(path.join(__dirname, 'view
 
 app.get('/api/setup', async (req, res) => {
   try {
-    await autoSetup();
+    await autoSetup(true);
     res.json({ success: true, message: 'Setup complete' });
   } catch (err) {
     res.status(500).json({ error: err.message });

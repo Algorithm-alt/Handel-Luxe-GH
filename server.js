@@ -10,8 +10,11 @@ const PORT = process.env.PORT || 3000;
 
 async function autoSetup() {
   try {
-    const [tables] = await db.query("SHOW TABLES LIKE 'users'");
-    if (tables.length > 0) return;
+    const [tables] = await db.query("SHOW TABLES LIKE 'products'");
+    if (tables.length > 0) {
+      const [count] = await db.query('SELECT COUNT(*) as cnt FROM products');
+      if (count[0].cnt > 0) return;
+    }
 
     console.log('Setting up database...');
     await db.query(`

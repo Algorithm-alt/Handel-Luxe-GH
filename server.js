@@ -183,7 +183,11 @@ app.post('/api/webhook/paystack', express.raw({ type: 'application/json' }), asy
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/images', express.static(path.join(__dirname, 'public/images')));
+app.use('/images', express.static(path.join(__dirname, 'public/images'), {
+  maxAge: '30d',
+  etag: true,
+  lastModified: true
+}));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'ecommerce-secret-key-2026',

@@ -51,7 +51,7 @@ function addPasswordToggle(inputEl) {
 function productCard(p) {
   return `<div class="product-card">
     <a href="/product/${p.id}">
-      <div class="img-wrap"><img src="${p.image || '/images/placeholder.png'}" alt="${p.name}"></div>
+      <div class="img-wrap"><img loading="lazy" src="${p.image || '/images/placeholder.png'}" alt="${p.name}"></div>
     </a>
     <div class="info">
       <div class="category">${p.category_name || 'General'}</div>

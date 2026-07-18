@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Fragrance - Handel Luxe GH</title><link rel="icon" type="image/png" href="/images/logo.png"><link rel="stylesheet" href="/css/style.css"></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fragrance - Handel Luxe GH</title>
+<meta name="description" content="">
+<meta name="robots" content="index, follow">
+<link rel="icon" type="image/png" href="/images/logo.png"><link rel="stylesheet" href="/css/style.css"></head>
 <body>
 <nav><div class="container nav-inner">
   <a href="/" class="logo"><img src="/images/logo.png" alt="Handel Luxe GH" style="height:40px;"> Handel Luxe GH</a>
@@ -42,6 +46,15 @@ let qty = 1;
   const id = window.location.pathname.split('/').pop();
   const p = await (await fetch(`/api/products/${id}`)).json();
   document.title = p.name + ' - Handel Luxe GH';
+  document.querySelector('meta[name="description"]').setAttribute('content', p.description ? p.description.substring(0, 160) : p.name + ' - Shop now at Handel Luxe GH');
+  document.querySelector('meta[property="og:title"]').setAttribute('content', p.name + ' - Handel Luxe GH');
+  document.querySelector('meta[property="og:description"]').setAttribute('content', p.description ? p.description.substring(0, 160) : p.name);
+  document.querySelector('meta[property="og:url"]').setAttribute('content', window.location.href);
+  if (p.image && p.image.startsWith('http')) document.querySelector('meta[property="og:image"]').setAttribute('content', p.image);
+  const jsonLd = document.createElement('script');
+  jsonLd.type = 'application/ld+json';
+  jsonLd.textContent = JSON.stringify({ '@context': 'https://schema.org', '@type': 'Product', name: p.name, description: p.description, image: p.image, offers: { '@type': 'Offer', price: p.price, priceCurrency: 'GHS', availability: p.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' } });
+  document.head.appendChild(jsonLd);
   document.getElementById('product-detail').innerHTML = `
     <div class="pd-image"><img src="${p.image || '/images/placeholder.png'}" alt="${p.name}"></div>
     <div class="pd-info">

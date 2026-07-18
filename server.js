@@ -146,6 +146,32 @@ async function autoSetup(force = false) {
       await db.query('INSERT INTO products (name, description, price, category_id, stock, image, featured) VALUES (?, ?, ?, ?, ?, ?, ?)', p);
     }
     console.log('Database seeded!');
+
+    // Auto-migrate images to Cloudinary
+    if (process.env.CLOUDINARY_CLOUD_NAME) {
+      try {
+        const cloudinary = require('cloudinary').v2;
+        const fs = require('fs');
+        cloudinary.config({
+          cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+          api_key: process.env.CLOUDINARY_API_KEY,
+          api_secret: process.env.CLOUDINARY_API_SECRET
+        });
+        const [rows] = await db.query("SELECT id, name, image FROM products WHERE image LIKE '/images/%'");
+        for (const p of rows) {
+          try {
+            const filePath = path.join(__dirname, 'public', p.image);
+            if (!fs.existsSync(filePath)) continue;
+            const result = await cloudinary.uploader.upload(filePath, {
+              folder: 'handel-luxe/products',
+              transformation: [{ width: 800, height: 800, crop: 'limit' }]
+            });
+            await db.query('UPDATE products SET image = ? WHERE id = ?', [result.secure_url, p.id]);
+          } catch (e) { console.error(`Migration failed for ${p.name}:`, e.message); }
+        }
+        console.log('Images migrated to Cloudinary!');
+      } catch (e) { console.error('Cloudinary migration error:', e.message); }
+    }
   } catch (err) {
     console.error('Auto-setup error:', err.message);
   }

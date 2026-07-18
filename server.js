@@ -168,8 +168,16 @@ app.get('/contact', (req, res) => res.sendFile(path.join(__dirname, 'views/conta
 app.get('/privacy', (req, res) => res.sendFile(path.join(__dirname, 'views/privacy.html')));
 app.get('/payment/verify', (req, res) => res.sendFile(path.join(__dirname, 'views/payment-verify.html')));
 
-autoSetup().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-  });
+app.get('/api/setup', async (req, res) => {
+  try {
+    await autoSetup();
+    res.json({ success: true, message: 'Setup complete' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+  autoSetup();
 });
